@@ -1,0 +1,7 @@
+{
+  "name": "KiosquePay BF",
+  "description": "Application professionnelle pour agents Orange Money au Burkina Faso : registre des opérations, scan et préremplissage CNIB, calcul automatique des commissions distributeurs et rapprochement de caisse.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
