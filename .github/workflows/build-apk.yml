@@ -1,0 +1,51 @@
+name: Build KiosquePay BF APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compiler APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le projet
+        uses: actions/checkout@v5
+
+      - name: Installer Java 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Installer Gradle 9.3.1
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: '9.3.1'
+
+      - name: Installer Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Vérifier Gradle
+        run: gradle --version
+
+      - name: Compiler APK Debug
+        run: gradle :app:assembleDebug --no-daemon
+
+      - name: Vérifier l'APK
+        run: |
+          ls -lh app/build/outputs/apk/debug/
+          test -f app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Publier l'APK
+        uses: actions/upload-artifact@v5
+        with:
+          name: KiosquePay-BF-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
